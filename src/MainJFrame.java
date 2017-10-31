@@ -4,8 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
-import java.nio.Buffer;
+import java.io.FileReader;
 import java.util.Random;
 
 public class MainJFrame extends JFrame {
@@ -58,8 +59,8 @@ public class MainJFrame extends JFrame {
     private JMenuItem jmiFDLoad = new JMenuItem("Load");
     private JMenuItem jmiFDNew = new JMenuItem("New");
     private JMenuItem jmiFDClose = new JMenuItem("Close");
-    private JTextField jtfFD = new JTextField();
-    private JScrollPane jspFD = new JScrollPane(jtfFD);
+    private JTextArea jtaFD = new JTextArea();
+    private JScrollPane jspFD = new JScrollPane(jtaFD);
     private JFileChooser jfc = new JFileChooser();
 
     Boolean checkjifL = true;
@@ -154,6 +155,7 @@ public class MainJFrame extends JFrame {
         jmFileData.add(jmiFDLoad);
         jmFileData.add(jmiFDNew);
         jmFileData.add(jmiFDClose);
+        jifFile.add(jtaFD);
 
         jmiExit.addActionListener(new ActionListener(){
             @Override
@@ -238,7 +240,6 @@ public class MainJFrame extends JFrame {
                 }
                 if(result==JOptionPane.OK_OPTION){
                     UIManager.put("Menu.font",new Font(jtfFamily.getText(),fontStyle,Integer.parseInt(jtfSize.getText())));
-
                 }
             }
         });
@@ -254,20 +255,24 @@ public class MainJFrame extends JFrame {
                 jifFile.setVisible(false);
             }
         });
-        jmiFDLoad.addActionListener(new ActionListener(){
+        jmiFDLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(jfc.showOpenDialog(null)==JFileChooser.APPROVE_OPTION){
-                   // try {
-                    //    File inFile = jfc.getSelectedFile();
-
-                    //}
+                if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        File inFile = jfc.getSelectedFile();
+                        BufferedReader br = new BufferedReader(new FileReader((inFile)));
+                        String str = "";
+                        while ((str = br.readLine()) != null) {
+                            jtaFD.append(str + "\n");
+                        }
+                    } catch (Exception ioe) {
+                        JOptionPane.showMessageDialog(null, "" + ioe.toString());
+                    }
                 }
             }
         });
     }
-
-
     private void LottoGenerate(){
         for(int i=0;i<6;i++){
             data[i]=rnd.nextInt(42)+1;

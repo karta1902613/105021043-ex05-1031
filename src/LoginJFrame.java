@@ -29,8 +29,8 @@ public class LoginJFrame extends JFrame{
         cp.add(jbtnExit);
         jlbID.setHorizontalAlignment(JLabel.RIGHT);
         jlbPW.setHorizontalAlignment(JLabel.RIGHT);
-        jtfID.setText("h304");
-        jtfPW.setText("23323456");
+        //jtfID.setText("h304");
+        //jtfPW.setText("23323456");
         jbtnExit.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,8 +44,8 @@ public class LoginJFrame extends JFrame{
                 if(jtfID.getText().equals("h304")&&jtfPW.getText().equals("23323456")){
                     System.out.println("登入成功");
                     MainJFrame mf = new  MainJFrame(LoginJFrame.this);
-                    //jtfID.setText("");
-                    //jtfPW.setText("");
+                    jtfID.setText("");
+                    jtfPW.setText("");
                     mf.setVisible(true);
                     LoginJFrame.this.setVisible((false));
                 }else{
